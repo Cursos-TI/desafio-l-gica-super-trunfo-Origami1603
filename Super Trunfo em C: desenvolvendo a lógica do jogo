@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 int main() {
     // --- Primeira Carta ---
@@ -9,25 +10,18 @@ int main() {
     printf("Cadastro da Primeira Carta:\n");
     printf("Carta: ");
     scanf("%d", &carta1);
-
     printf("Estado: ");
-    scanf("%s", estado1);
-
+    scanf("%s", &estado1);
     printf("Código da cidade: ");
-    scanf("%s", codigo1);
-
+    scanf("%s", &codigo1);
     printf("Nome da cidade: ");
-    scanf("%s", nome1);
-
+    scanf("%s", &nome1);
     printf("População: ");
     scanf("%d", &populacao1);
-
     printf("Área (km²): ");
     scanf("%f", &area1);
-
     printf("PIB (em bilhões): ");
     scanf("%f", &pib1);
-
     printf("Número de pontos turísticos: ");
     scanf("%d", &pontos1);
 
@@ -43,25 +37,18 @@ int main() {
     printf("\nCadastro da Segunda Carta:\n");
     printf("Carta: ");
     scanf("%d", &carta2);
-
     printf("Estado: ");
-    scanf("%s", estado2);
-
+    scanf("%s", &estado2);
     printf("Código da cidade: ");
-    scanf("%s", codigo2);
-
+    scanf("%s", &codigo2);
     printf("Nome da cidade: ");
-    scanf("%s", nome2);
-
+    scanf("%s", &nome2);
     printf("População: ");
     scanf("%d", &populacao2);
-
     printf("Área (km²): ");
     scanf("%f", &area2);
-
     printf("PIB (em bilhões): ");
     scanf("%f", &pib2);
-
     printf("Número de pontos turísticos: ");
     scanf("%d", &pontos2);
 
@@ -69,51 +56,86 @@ int main() {
     pibPerCapita2 = pib2 / populacao2;
     superPoder2 = populacao2 + area2 + pib2 + pontos2 + (1.0 / densidade2) + pibPerCapita2;
 
-    // --- Comparações ---
-    printf("\n--- Comparação de Cartas ---\n");
+    int atributo1, atributo2;
 
-    // População
-    printf("\nPopulação:\n");
-    printf("%s (%s): %d\n", nome1, estado1, populacao1);
-    printf("%s (%s): %d\n", nome2, estado2, populacao2);
-    printf("Vencedor: %s\n", (populacao1 > populacao2) ? nome1 : nome2);
+    printf("\n===== SUPER TRUNFO — COMPARAÇÃO DUPLA =====\n");
+    printf("Escolha o primeiro atributo:\n");
+    printf("1 - População\n");
+    printf("2 - Área\n");
+    printf("3 - PIB\n");
+    printf("4 - Pontos Turísticos\n");
+    printf("5 - Densidade Demográfica\n");
+    printf("Digite o número do primeiro atributo: ");
+    scanf("%d", &atributo1);
 
-    // Pontos turísticos
-    printf("\nPontos Turísticos:\n");
-    printf("%s (%s): %d\n", nome1, estado1, pontos1);
-    printf("%s (%s): %d\n", nome2, estado2, pontos2);
-    printf("Vencedor: %s\n", (pontos1 > pontos2) ? nome1 : nome2);
+    if (atributo1 < 1 || atributo1 > 5) {
+        printf("Opção inválida. Encerrando o programa.\n");
+        return 1;
+    }
 
-    // Área
-    printf("\nÁrea:\n");
-    printf("%s (%s): %.2f km²\n", nome1, estado1, area1);
-    printf("%s (%s): %.2f km²\n", nome2, estado2, area2);
-    printf("Vencedor: %s\n", (area1 > area2) ? nome1 : nome2);
+    printf("\nEscolha o segundo atributo (diferente do primeiro):\n");
+    for (int i = 1; i <= 5; i++) {
+        if (i != atributo1) {
+            switch (i) {
+                case 1: printf("1 - População\n"); break;
+                case 2: printf("2 - Área\n"); break;
+                case 3: printf("3 - PIB\n"); break;
+                case 4: printf("4 - Pontos Turísticos\n"); break;
+                case 5: printf("5 - Densidade Demográfica\n"); break;
+            }
+        }
+    }
+    printf("Digite o número do segundo atributo: ");
+    scanf("%d", &atributo2);
 
-    // PIB
-    printf("\nPIB:\n");
-    printf("%s (%s): %.2f\n", nome1, estado1, pib1);
-    printf("%s (%s): %.2f\n", nome2, estado2, pib2);
-    printf("Vencedor: %s\n", (pib1 > pib2) ? nome1 : nome2);
+    if (atributo2 < 1 || atributo2 > 5 || atributo2 == atributo1) {
+        printf("Opção inválida. Encerrando o programa.\n");
+        return 1;
+    }
 
-    // PIB per capita
-    printf("\nPIB per capita:\n");
-    printf("%s (%s): %.2f\n", nome1, estado1, pibPerCapita1);
-    printf("%s (%s): %.2f\n", nome2, estado2, pibPerCapita2);
-    printf("Vencedor: %s\n", (pibPerCapita1 > pibPerCapita2) ? nome1 : nome2);
+    // Obter valores dos atributos
+    float val1_attr1, val2_attr1, val1_attr2, val2_attr2;
+    char nomeAttr1[30], nomeAttr2[30];
 
-    // Densidade populacional (MENOR vence)
-    printf("\nDensidade Populacional:\n");
-    printf("%s (%s): %.2f\n", nome1, estado1, densidade1);
-    printf("%s (%s): %.2f\n", nome2, estado2, densidade2);
-    printf("Vencedor: %s\n", (densidade1 < densidade2) ? nome1 : nome2);
+    // Atributo 1
+    switch (atributo1) {
+        case 1: val1_attr1 = populacao1; val2_attr1 = populacao2; strcpy(nomeAttr1, "População"); break;
+        case 2: val1_attr1 = area1; val2_attr1 = area2; strcpy(nomeAttr1, "Área"); break;
+        case 3: val1_attr1 = pib1; val2_attr1 = pib2; strcpy(nomeAttr1, "PIB"); break;
+        case 4: val1_attr1 = pontos1; val2_attr1 = pontos2; strcpy(nomeAttr1, "Pontos Turísticos"); break;
+        case 5: val1_attr1 = densidade1; val2_attr1 = densidade2; strcpy(nomeAttr1, "Densidade Demográfica"); break;
+    }
 
-    // Super Poder
-    printf("\nSuper Poder:\n");
-    printf("%s (%s): %.2f\n", nome1, estado1, superPoder1);
-    printf("%s (%s): %.2f\n", nome2, estado2, superPoder2);
-    printf("Vencedor: %s\n", (superPoder1 > superPoder2) ? nome1 : nome2);
+    // Atributo 2
+    switch (atributo2) {
+        case 1: val1_attr2 = populacao1; val2_attr2 = populacao2; strcpy(nomeAttr2, "População"); break;
+        case 2: val1_attr2 = area1; val2_attr2 = area2; strcpy(nomeAttr2, "Área"); break;
+        case 3: val1_attr2 = pib1; val2_attr2 = pib2; strcpy(nomeAttr2, "PIB"); break;
+        case 4: val1_attr2 = pontos1; val2_attr2 = pontos2; strcpy(nomeAttr2, "Pontos Turísticos"); break;
+        case 5: val1_attr2 = densidade1; val2_attr2 = densidade2; strcpy(nomeAttr2, "Densidade Demográfica"); break;
+    }
+
+    // Pontuação com regras
+    float score1 = 0, score2 = 0;
+    score1 += (atributo1 == 5) ? (val1_attr1 < val2_attr1 ? 1 : val1_attr1 == val2_attr1 ? 0.5 : 0)
+                                : (val1_attr1 > val2_attr1 ? 1 : val1_attr1 == val2_attr1 ? 0.5 : 0);
+    score2 += (atributo1 == 5) ? (val2_attr1 < val1_attr1 ? 1 : val2_attr1 == val1_attr1 ? 0.5 : 0)
+                                : (val2_attr1 > val1_attr1 ? 1 : val2_attr1 == val1_attr1 ? 0.5 : 0);
+
+    score1 += (atributo2 == 5) ? (val1_attr2 < val2_attr2 ? 1 : val1_attr2 == val2_attr2 ? 0.5 : 0)
+                                : (val1_attr2 > val2_attr2 ? 1 : val1_attr2 == val2_attr2 ? 0.5 : 0);
+    score2 += (atributo2 == 5) ? (val2_attr2 < val1_attr2 ? 1 : val2_attr2 == val1_attr2 ? 0.5 : 0)
+                                : (val2_attr2 > val1_attr2 ? 1 : val2_attr2 == val1_attr2 ? 0.5 : 0);
+
+    // Exibição final
+    printf("\n===== RESULTADO FINAL =====\n");
+    printf("%s:\n  %s: %.2f\n  %s: %.2f\n", nome1, nomeAttr1, val1_attr1, nomeAttr2, val1_attr2);
+    printf("%s:\n  %s: %.2f\n  %s: %.2f\n", nome2, nomeAttr1, val2_attr1, nomeAttr2, val2_attr2);
+    printf("\nPontuação:\n  %s: %.1f pontos\n  %s: %.1f pontos\n", nome1, score1, nome2, score2);
+
+    (score1 > score2) ? printf("\nVencedor: %s 🏆\n", nome1) :
+    (score2 > score1) ? printf("\nVencedor: %s 🏆\n", nome2) :
+                          printf("\nResultado: Empate! 🤝\n");
 
     return 0;
 }
-
